@@ -1,16 +1,19 @@
-import React from 'react';
-import './styles/App.css';
+import React, {FC, ReactElement} from 'react';
+import {ThemeProvider, CssBaseline} from "@mui/material"
+import { customTheme } from './theme/customTheme';
 
-function App() {
+// My components
+import Dashboard from './pages/Dashboard';
+
+
+//Note: FC is Functional Component
+//      ReactElement is the JSX that's constucted for rendering.
+const App:FC = ():ReactElement  => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={"logos/logo512.png"} className="App-logo" alt="logo" />
-        <p>
-          Just the generic home page that comes with creating a react project.
-        </p>
-      </header>
-    </div>
+    <ThemeProvider theme={customTheme}>
+      <CssBaseline/>
+      <Dashboard/>
+    </ThemeProvider>
   );
 }
 
