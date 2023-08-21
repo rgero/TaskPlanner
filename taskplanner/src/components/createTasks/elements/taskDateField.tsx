@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { IDateField } from './intefaces/IDateField';
+import { IDateField } from '../intefaces/IDateField';
 
 
 const TaskDateField:FC<IDateField> = (props): ReactElement => {

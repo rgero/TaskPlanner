@@ -2,9 +2,9 @@ import React, {FC, ReactElement} from 'react';
 import PropTypes from 'prop-types';
 
 import { TextField } from '@mui/material';
-import { ITextField } from './intefaces/ITextField';
+import { ITextField } from '../intefaces/ITextField';
 
-const TaskTitleField:FC<ITextField> = (props) :ReactElement  => {
+const TaskDescriptionField:FC<ITextField> = (props):ReactElement  => {
     const {
         onChange = (e) => console.log(e),  
         disabled = false
@@ -12,22 +12,24 @@ const TaskTitleField:FC<ITextField> = (props) :ReactElement  => {
 
     return (
         <TextField
-            id="title"
-            label="Task Title"
-            placeholder="Task Title"
+            id="description"
+            name="description"
+            label="Description"
+            placeholder="Description"
             variant="outlined"
             size="small"
-            name="title"
+            multiline
+            rows={4}
             fullWidth
-            disabled={disabled}
             onChange={onChange}
+            disabled={disabled}
         />
     )
 }
 
-TaskTitleField.propTypes = {
+TaskDescriptionField.propTypes = {
     onChange: PropTypes.func,
     disabled: PropTypes.bool
 }
 
-export default TaskTitleField
+export default TaskDescriptionField

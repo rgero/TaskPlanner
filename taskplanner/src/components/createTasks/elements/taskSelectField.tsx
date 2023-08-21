@@ -5,7 +5,7 @@ import React, {FC, ReactElement} from 'react';
 import PropTypes from 'prop-types';
 
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { ISelectField } from './intefaces/ISelectField';
+import { ISelectField } from '../intefaces/ISelectField';
 
 const TaskSelectField:FC<ISelectField> = (props) :ReactElement  => {
     const {

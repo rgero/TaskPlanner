@@ -1,9 +1,9 @@
 import React, {FC, ReactElement} from 'react';
 import { Box, SelectChangeEvent, Stack, Typography } from '@mui/material';
-import TaskTitleField from './taskTitleField';
-import TaskDescriptionField from './taskDescriptionField';
-import TaskDateField from './taskDateField';
-import TaskSelectField from './taskSelectField';
+import TaskTitleField from './elements/taskTitleField';
+import TaskDescriptionField from './elements/taskDescriptionField';
+import TaskDateField from './elements/taskDateField';
+import TaskSelectField from './elements/taskSelectField';
 
 const statusOptions = [
     {
