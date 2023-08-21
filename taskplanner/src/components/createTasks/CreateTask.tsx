@@ -1,5 +1,8 @@
 import React, {FC, ReactElement} from 'react';
 import { Box, SelectChangeEvent, Stack, Typography } from '@mui/material';
+
+import { Priority } from './enums/Priority';
+import { Status } from './enums/Status';
 import TaskTitleField from './elements/taskTitleField';
 import TaskDescriptionField from './elements/taskDescriptionField';
 import TaskDateField from './elements/taskDateField';
@@ -7,30 +10,30 @@ import TaskSelectField from './elements/taskSelectField';
 
 const statusOptions = [
     {
-        value: "todo",
+        value: Status.todo,
         label: "To Do"
     },
     {
-        value: "inprogress",
+        value: Status.inProgress,
         label: "In Progress"
     },
     {
-        value: "done",
+        value: Status.done,
         label: "Done"
     },
 ]
 
 const priorities = [
     {
-        value: "low",
+        value: Priority.low,
         label: "Low"
     },
     {
-        value: "med",
-        label: "Medium"
+        value: Priority.normal,
+        label: "Normal"
     },
     {
-        value: "high",
+        value: Priority.high,
         label: "High"
     },
 ]
@@ -42,7 +45,6 @@ const CreateTask:FC = ():ReactElement  => {
     const [date, setDate] = React.useState(new Date());
     const [status, setStatus] = React.useState(statusOptions[0].value)
     const [priority, setPriority] = React.useState(priorities[0].value)
-
 
     return (
             <Box
@@ -71,14 +73,14 @@ const CreateTask:FC = ():ReactElement  => {
                         <TaskSelectField 
                             label="Status" 
                             value={status} 
-                            options={statusOptions} 
-                            onChange={(e)=>setStatus(e.target.value)}
+                            options={statusOptions}
+                            onChange={(e) => setStatus(e.target.value as Status)}
                         />
                         <TaskSelectField 
                             label="Priority" 
                             value={priority}
                             options={priorities}
-                            onChange={(e)=>setPriority(e.target.value)}
+                            onChange={(e) => setPriority(e.target.value as Priority)}
                         />
                     </Stack>
                 </Stack>
