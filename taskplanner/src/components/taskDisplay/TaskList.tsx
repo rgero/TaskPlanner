@@ -2,6 +2,7 @@ import React, {FC, ReactElement} from 'react';
 
 import { Grid } from '@mui/material';
 import TaskCard from './taskCard/TaskCard';
+import { Priority } from '../createTasks/enums/Priority';
 
 const TaskList:FC = ():ReactElement  => {
     return (
@@ -12,8 +13,8 @@ const TaskList:FC = ():ReactElement  => {
           xs={10}
           md={8}
         >
-          <TaskCard/>
-          <TaskCard/>
+          <TaskCard priority={Priority.high}/>
+          <TaskCard priority={Priority.low}/>
           <TaskCard/>
           <TaskCard/>
         </Grid>
