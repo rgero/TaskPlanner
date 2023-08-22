@@ -3,10 +3,10 @@ import { Box, SelectChangeEvent, Stack, Typography } from '@mui/material';
 
 import { Priority } from './enums/Priority';
 import { Status } from './enums/Status';
-import TaskTitleField from './elements/taskTitleField';
-import TaskDescriptionField from './elements/taskDescriptionField';
-import TaskDateField from './elements/taskDateField';
-import TaskSelectField from './elements/taskSelectField';
+import TaskTitleField from './components/taskTitleField';
+import TaskDescriptionField from './components/taskDescriptionField';
+import TaskDateField from './components/taskDateField';
+import TaskSelectField from './components/taskSelectField';
 
 const statusOptions = [
     {
@@ -59,7 +59,7 @@ const CreateTask:FC = ():ReactElement  => {
                     Create A Task
                 </Typography>
 
-                <Stack sx={{ width: '100%' }} spacing={1}>
+                <Stack sx={{ width: '100%' }} spacing={2}>
                     <TaskTitleField
                         onChange={(e)=> {setTitle(e.target.value)}}
                     />
