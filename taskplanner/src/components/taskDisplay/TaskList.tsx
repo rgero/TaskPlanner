@@ -1,6 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 
-import { Grid, Box } from '@mui/material';
+import { Grid } from '@mui/material';
+import TaskCard from './taskCard/TaskCard';
 
 const TaskList:FC = ():ReactElement  => {
     return (
@@ -11,8 +12,10 @@ const TaskList:FC = ():ReactElement  => {
           xs={10}
           md={8}
         >
-          <Box>Tasks Will Come Over Here</Box>
-          <Box>Tasks Will Come Over Here</Box>
+          <TaskCard/>
+          <TaskCard/>
+          <TaskCard/>
+          <TaskCard/>
         </Grid>
     )
 }
