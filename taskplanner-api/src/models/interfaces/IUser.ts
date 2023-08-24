@@ -1,7 +1,7 @@
-export interface IUser {
+import { Document } from "mongoose";
+
+export interface IUser extends Document {
     displayName: string,
     email: string,
     password: string,
-    comparePasswords(candidatePassword: string): void,
-    isModified(inputParam:string): boolean
 }
