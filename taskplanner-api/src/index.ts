@@ -7,6 +7,7 @@ import cors from 'cors';
 
 import mongoose from './mongooseStarter';
 import authRoutes from './routes/authRoutes';
+import requireAuth from './middlewares/requireAuth';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -20,6 +21,10 @@ app.use(authRoutes);
 app.get("/", (req:Request, res:Response) => {
     res.send("HELLO ROYMOND");
 });
+
+app.get('/test', requireAuth, (req:Request, res:Response) => {
+    res.send(`Your e-mail: ${req.user.email}`);
+})
 
 app.listen(port, ()=>{
     console.log(`Server started, listening on port ${port}`);
