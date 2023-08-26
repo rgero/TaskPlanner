@@ -16,16 +16,10 @@ router.post ('/signup', async (req:Request, res:Response)=> {
         await user.save();
     
         const token = jwt.sign({userId: user._id}, secretKey);
-
-        return res.send({ token, email, displayName });
-
+        res.send({ token, email, displayName });
     } catch (err)
     {
-        if (err instanceof Error)
-        {
-            return res.status(422).send(err.message);
-        }
-        return res.status(422).send("Something went wrong");
+        res.status(422).send(err.message);
     }
 })
 
@@ -35,13 +29,13 @@ router.post(`/signin`, async (req:Request, res:Response) => {
 
     if (!email || !password)
     {
-        return res.status(422).send({error: "Must provide an email and password"});
+        res.status(422).send({error: "Must provide an email and password"});
     }
 
     const user = await User.findOne({email});
     if (!user)
     {
-        return res.status(422).send({error: "Invalid email or password"});
+        res.status(422).send({error: "Invalid email or password"});
     }
 
     try {
@@ -53,11 +47,11 @@ router.post(`/signin`, async (req:Request, res:Response) => {
             displayName: user.displayName,
             email: user.email
         }
-        return res.send(response)
+        res.send(response)
 
     } catch (err)
     {
-        return res.status(422).send({error: "Invalid email or password"})
+        res.status(422).send({error: "Invalid email or password"})
     }
 
 })
@@ -67,18 +61,18 @@ router.post(`/change`, async (req:Request, res:Response) => {
 
     if (!email || !password || !changes)
     {
-        return res.status(422).send({error: "Request not full"});
+        res.status(422).send({error: "Request not full"});
     }
 
     if (Object.keys(changes).length == 0)
     {
-        return res.status(422).send({error: "Request not full"});
+        res.status(422).send({error: "Request not full"});
     }
 
     const user = await User.findOne({email});
     if (!user)
     {
-        return res.status(422).send({error: "Invalid email or password"});
+        res.status(422).send({error: "Invalid email or password"});
     }
 
     try {
@@ -108,10 +102,10 @@ router.post(`/change`, async (req:Request, res:Response) => {
             displayName: user.displayName,
             email: user.email
         }
-        return res.send(response);
+        res.send(response);
     } catch (err)
     {
-        return res.status(422).send({error: "Invalid email or password"})
+        res.status(422).send({error: "Invalid email or password"})
     }
 })
 

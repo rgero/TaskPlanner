@@ -9,7 +9,7 @@ router.use(requireAuth);
 
 router.get('/tasks', async (req:Request, res:Response) => {
     const tasks = await Task.find({userId: req.user._id});
-    res.send(tasks);
+    return res.send(tasks);
 })
 
 router.get('/tasks/:taskID', async (req,res) => {
@@ -41,7 +41,7 @@ router.delete('/tasks/:taskID', async (req, res) => {
         res.send("Task deleted");
     } catch (err)
     {
-        return res.status(422).send({error:err.message});
+        res.status(422).send({error:err.message});
     }
 })
 
