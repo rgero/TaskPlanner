@@ -1,34 +1,48 @@
-import './models/User';
-import './models/Task';
-
 import express, {Express, Request, Response} from "express";
-import dotenv from "dotenv";
+import { DataSource } from 'typeorm';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
-import mongoose from './mongooseStarter';
-import authRoutes from './routes/authRoutes';
-import taskRoutes from './routes/taskRoutes';
-import requireAuth from './middlewares/requireAuth';
+import { Task } from "./tasks/tasks.entity";
+import { User } from "./users/user.entity";
+
+// Instantiate express app
+const app: Express = express();
+app.use(bodyParser.json());
+app.use(cors());
 
 dotenv.config();
 const port = process.env.PORT;
 
-mongoose.start();
-const app:Express = express();
-app.use(bodyParser.json());
-app.use(cors());
-app.use(authRoutes);
-app.use(taskRoutes);
-
-app.get("/", (req:Request, res:Response) => {
-    res.send("HELLO ROYMOND");
+// Create Database Connection
+export const AppDataSource = new DataSource({
+    type: 'mysql',
+    host: process.env.HOST,
+    port: 2777,
+    username: process.env.ADMIN_USER,
+    password: process.env.ADMIN_PASSWORD,
+    database: process.env.MYSQL_DB,
+    entities: [Task, User],
+    synchronize: true,
 });
 
-app.get('/test', requireAuth, (req:Request, res:Response) => {
-    res.send(`Your e-mail: ${req.user.email}`);
-})
+// Create a default route.
+app.get('/', (req: Request, res: Response) => {
+    res.send('Express + TypeScript Server');
+});
 
-app.listen(port, ()=>{
-    console.log(`Server started, listening on port ${port}`);
-})
+AppDataSource.initialize().then(() => 
+    {
+        // Start listenting to the requests on the defined port
+        app.listen(port);
+        console.log('Data Source has been initialized!');
+    }).catch((err) => 
+    {
+        console.error(
+        'Error during Data Source initialization',
+        err,
+        );
+    }
+);
+  
