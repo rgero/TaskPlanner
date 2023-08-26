@@ -3,7 +3,7 @@ import { Priority } from "../../enums/Priority";
 import { Status } from "../../enums/Status";
 
 export default interface ITask extends Document {
-    ownerID: Types.ObjectId,
+    userId: Types.ObjectId,
     title: string,
     description?: string,
     date?: Date,

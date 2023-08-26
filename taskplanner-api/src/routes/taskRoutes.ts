@@ -12,25 +12,25 @@ router.get('/tasks', async (req:Request, res:Response) => {
     return res.send(tasks);
 })
 
-router.get('/tasks/:taskID', async (req,res) => {
+router.get('/tasks/:taskID', async (req:Request,res:Response) => {
     try {
         const taskID = new mongoose.Types.ObjectId(req.params.taskID);
         const currentUser = req.user._id;
         const task = await Task.findOne({_id: taskID, userId: currentUser});
         if (task)
         {
-            res.send(task);
+            return res.send(task);
         } else {
-            res.status(500).send("Invalid Request");
+            return res.status(500).send("Invalid Request");
         }
     } catch (err)
     {
         console.log(err);
-        res.status(500).send(err.message);
+        return res.status(500).send(err.message);
     }
 })
 
-router.delete('/tasks/:taskID', async (req, res) => {
+router.delete('/tasks/:taskID', async (req:Request, res:Response) => {
     try { 
         const taskID = new mongoose.Types.ObjectId(req.params.taskID);
         const task = await Task.findOneAndDelete({_id: taskID, userId: req.user._id});
@@ -38,10 +38,39 @@ router.delete('/tasks/:taskID', async (req, res) => {
         {
             throw Error("Task not found");
         }
-        res.send("Task deleted");
+        return res.send("Task deleted");
     } catch (err)
     {
-        res.status(422).send({error:err.message});
+        return res.status(422).send({error:err.message});
+    }
+})
+
+router.put('/tasks/:taskID', async (req:Request, res:Response) => {
+    try { 
+        const currentUser = req.user._id;
+        const taskID = req.params.taskID;
+        const task = await Task.findOneAndUpdate({_id: taskID, userId: currentUser}, req.body, {new: true})
+        return res.send(task);
+    } catch (err)
+    {
+        return res.status(422).send({error:err.message});
+    }
+})
+
+router.post('/tasks', async (req:Request, res:Response) => {
+    const {title, description, date, priority, status} = req.body;
+    if (!title)
+    {
+        return res.status(422).send({error: "You must provide a task title"});
+    }
+
+    try {
+        const task = new Task({title, description, date, priority, status, userId: req.user._id})
+        await task.save();
+        return res.send(task);
+    } catch (err)
+    {
+        return res.status(422).send({error:err.message});
     }
 })
 
