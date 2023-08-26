@@ -1,4 +1,5 @@
 import './models/User';
+import './models/Task';
 
 import express, {Express, Request, Response} from "express";
 import dotenv from "dotenv";
@@ -7,6 +8,7 @@ import cors from 'cors';
 
 import mongoose from './mongooseStarter';
 import authRoutes from './routes/authRoutes';
+import taskRoutes from './routes/taskRoutes';
 import requireAuth from './middlewares/requireAuth';
 
 dotenv.config();
@@ -17,6 +19,7 @@ const app:Express = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(authRoutes);
+app.use(taskRoutes);
 
 app.get("/", (req:Request, res:Response) => {
     res.send("HELLO ROYMOND");
