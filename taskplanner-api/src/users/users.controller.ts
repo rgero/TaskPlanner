@@ -25,8 +25,6 @@ class UsersController
         newUser.email = req.body.email;
         newUser.password = await bcrypt.hash(req.body.password, 10);
 
-        console.log(newUser.password);
-
         // Save the user, sign the token, send it back
         try {
             const createdUser = await AppDataSource.getRepository(User).save(newUser);
@@ -41,19 +39,48 @@ class UsersController
             return res.status(201).json(response);
         } catch (errors)
         {
-            console.log(errors)
             return res.status(500).json({error: "Internal Server Error"});
         }
     }
 
-    // public async SignIn(req: Request, res: Response): Promise<Response>
-    // {
-    //     const errors = validationResult(req);
-    //     if (!errors.isEmpty())
-    //     {
-    //       return res.status(400).json({errors: errors.array()});
-    //     }
-    // }
+    public async SignIn(req: Request, res: Response): Promise<Response>
+    {
+        const errors = validationResult(req);
+        if (!errors.isEmpty())
+        {
+          return res.status(400).json({errors: errors.array()});
+        }
+
+        try {
+            const foundUser = await AppDataSource.getRepository(User).findOne({
+                where: {
+                    email: req.body.email
+                }
+            });
+            if (!foundUser)
+            {
+                return res.status(404).json({error: "User not found"});
+            }
+            const isValid = await bcrypt.compare(req.body.password, foundUser.password)
+            if (!isValid)
+            {
+                return res.status(400).send('invalid email and password!')
+            } 
+            
+            const token = jwt.sign({userId: foundUser.id}, secretKey)
+            const response = {
+                token: token,
+                email: foundUser.email,
+                displayName: foundUser.displayName
+            }
+            return res.status(201).json(response);
+        }
+        catch (errors)
+        {
+            console.log(errors)
+            return res.status(500).json({error: "Internal Server Error"});
+        }
+    }
 
     // public async ChangeDetails(req: Request, res: Response): Promise<Response>
     // {

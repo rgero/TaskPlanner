@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { createUserValidator } from './users.validator';
+import { createUserValidator, signInValidator } from './users.validator';
 import { usersController } from './users.controller';
 
 /*Fire the router function*/
@@ -11,3 +11,4 @@ usersRouter.get('/users', (req: Request, res: Response) => {
 });
 
 usersRouter.post('/signup', createUserValidator, usersController.SignUp);
+usersRouter.post('/signin', signInValidator, usersController.SignIn);
