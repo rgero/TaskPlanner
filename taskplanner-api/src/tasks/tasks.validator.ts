@@ -10,3 +10,11 @@ export const createValidator: ValidationChain[] = [
     body('status').trim().isIn([Status.todo, Status.inProgress, Status.done]).withMessage("You need a status")
 ];
 
+export const updateValidator: ValidationChain[] = [
+    body('id').not().isEmpty().withMessage("Task ID is mandatory").trim().isString().withMessage("ID needs to be a uuid format"),
+    body('priority').trim().isIn([Priority.low, Priority.normal, Priority.high]).withMessage("You need a priority"),
+    body('status').trim().isIn([Status.todo, Status.inProgress, Status.done]).withMessage("You need a status"),
+    body('title').not().isEmpty().withMessage("Task Title is Mandatory").trim().isString(),
+    body('date').not().isEmpty().withMessage("Task Date is Mandatory").isString(),
+    body('description').trim().isString().withMessage("Description must be a string")
+]

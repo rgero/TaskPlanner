@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, } from "typeorm";
 import { Priority } from "../enums/Priority";
 import { Status } from "../enums/Status";
 import { User } from "../users/users.entity";
@@ -10,7 +10,7 @@ export class Task{
 
     // Disabling ESLint for this one line
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @OneToOne(type => User) @JoinColumn()
+    @ManyToOne(type => User)
     user: User;
 
     @Column({type:'text'})
