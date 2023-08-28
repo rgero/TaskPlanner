@@ -5,12 +5,16 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import { Task } from "./tasks/tasks.entity";
-import { User } from "./users/user.entity";
+import { User } from "./users/users.entity";
+import { usersRouter } from "./users/users.router";
+import { tasksRouter } from "./tasks/tasks.router";
 
 // Instantiate express app
 const app: Express = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(usersRouter);
+app.use(tasksRouter);
 
 dotenv.config();
 const port = process.env.PORT;
@@ -24,7 +28,7 @@ export const AppDataSource = new DataSource({
     password: process.env.ADMIN_PASSWORD,
     database: process.env.MYSQL_DB,
     entities: [Task, User],
-    synchronize: true,
+    synchronize: false,
 });
 
 // Create a default route.

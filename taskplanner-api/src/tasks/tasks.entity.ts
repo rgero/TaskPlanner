@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, } from "typeorm";
 import { Priority } from "../enums/Priority";
 import { Status } from "../enums/Status";
-import { User } from "../users/user.entity";
+import { User } from "../users/users.entity";
 
 @Entity()
 export class Task{
