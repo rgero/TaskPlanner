@@ -9,6 +9,6 @@ import { requireAuthentication } from '../middlewares/requireAuthentication';
 export const tasksRouter: Router = Router();
 
 // ROUTES
-tasksRouter.get('/tasks', tasksController.getAll);
+tasksRouter.get('/tasks', requireAuthentication, tasksController.getAll);
 tasksRouter.post('/tasks', [requireAuthentication, runValidator(createValidator)], tasksController.create);
 tasksRouter.put('/tasks', [requireAuthentication, runValidator(updateValidator)], tasksController.update);

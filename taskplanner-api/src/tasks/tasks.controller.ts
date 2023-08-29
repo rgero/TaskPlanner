@@ -11,8 +11,11 @@ class TasksController {
         let allTasks:Task[];
         try {
             allTasks = await AppDataSource.getRepository(Task).find({
+                where: {
+                    user: req.user
+                },
                 order: {
-                date: 'ASC',
+                    date: 'ASC',
                 },
             });
 
