@@ -81,15 +81,6 @@ class UsersController
             return res.status(500).json({error: "Internal Server Error"});
         }
     }
-
-    // public async ChangeDetails(req: Request, res: Response): Promise<Response>
-    // {
-    //     const errors = validationResult(req);
-    //     if (!errors.isEmpty())
-    //     {
-    //       return res.status(400).json({errors: errors.array()});
-    //     }
-    // }
 }
 
 export const usersController = new UsersController();
