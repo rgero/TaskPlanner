@@ -73,7 +73,7 @@ class TasksController {
 
         try {
             task = await AppDataSource.getRepository(Task).findOne({
-                where: { id: req.body.id }
+                where: { id: req.body.id, user: req.user }
             });
         } catch (errors) {
             return res.status(500).json({ error: 'Internal Server Error' })
