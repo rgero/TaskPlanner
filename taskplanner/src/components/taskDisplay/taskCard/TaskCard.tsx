@@ -21,6 +21,7 @@ const TaskCard:FC<ITaskCard> = (props):ReactElement  => {
         status = Status.todo,
         onStatusChange = (e) => console.log(e),
         onClick = (e) => console.log(e),
+        id
     } = props;
 
     const taskStyling = {
@@ -43,7 +44,7 @@ const TaskCard:FC<ITaskCard> = (props):ReactElement  => {
         >
             <TaskHeader title={title} date={date} />
             <TaskDescription description={description}/>
-            <TaskFooter onStatusChange={onStatusChange} onClick={onClick}/>
+            <TaskFooter id={id} status={status} onStatusChange={onStatusChange} onClick={onClick}/>
         </Box>
 
 

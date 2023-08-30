@@ -42,7 +42,9 @@ const TaskFooter: FC<ITaskFooter> = (props): ReactElement => {
 
 TaskFooter.propTypes = {
     onStatusChange: PropTypes.func,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    id: PropTypes.string.isRequired,
+    status: PropTypes.string
 }
 
 export default TaskFooter;
