@@ -3,6 +3,7 @@ import React, {FC, ReactElement} from 'react';
 import { Grid } from '@mui/material';
 import TaskCard from './taskCard/TaskCard';
 import { ITaskList } from './interfaces/ITaskList';
+import { Status } from '../createTasks/enums/Status';
 
 const TaskList:FC<ITaskList> = (props):ReactElement  => {
   const {tasks} = props;
@@ -19,7 +20,9 @@ const TaskList:FC<ITaskList> = (props):ReactElement  => {
             && tasks.length != 0 
             && tasks.map((each, index) => 
             {
-              return  <TaskCard key={index} 
+
+              return each.status === Status.todo || each.status == Status.inProgress ?
+                ( <TaskCard key={index} 
                                 id={each.id} 
                                 title={each.title} 
                                 description={each.description}
@@ -27,6 +30,7 @@ const TaskList:FC<ITaskList> = (props):ReactElement  => {
                                 priority={each.priority}
                                 status={each.status}
                       />
+                ) : (null)
             })
           }
         </>

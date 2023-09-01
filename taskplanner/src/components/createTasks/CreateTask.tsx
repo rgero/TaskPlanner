@@ -46,7 +46,7 @@ const priorities = [
 
 const CreateTask:FC = ():ReactElement  => {
     const [title, setTitle] = React.useState<string|undefined>(undefined);
-    const [description, setDescription] = React.useState<string|undefined>(undefined);
+    const [description, setDescription] = React.useState<string>("");
     const [date, setDate] = React.useState<Date|null>( new Date() );
     const [status, setStatus] = React.useState<string>(statusOptions[0].value)
     const [priority, setPriority] = React.useState<string>(priorities[0].value)
@@ -59,7 +59,7 @@ const CreateTask:FC = ():ReactElement  => {
 
     const createTaskHandler = () => 
     {
-        if (!title || !description || !date)
+        if (!title || !date)
         {
             return;
         }
@@ -80,7 +80,6 @@ const CreateTask:FC = ():ReactElement  => {
         {
             setSuccess(true);
         }
-
         const successTimeout = setTimeout( ()=>{setSuccess(false)}, 7000);
 
         return () => {clearTimeout(successTimeout)}; // Disables the timeout when component unmounts.
@@ -143,7 +142,7 @@ const CreateTask:FC = ():ReactElement  => {
                         fullWidth 
                         onClick={createTaskHandler} 
                         disabled={
-                            !title || !description || !date || !priority || !status
+                            !title || !date || !priority || !status
                         }>
                         Create a Task
                     </Button>
