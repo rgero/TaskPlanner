@@ -6,7 +6,7 @@ import { ITaskList } from './interfaces/ITaskList';
 import { Status } from '../createTasks/enums/Status';
 
 const TaskList:FC<ITaskList> = (props):ReactElement  => {
-  const {tasks} = props;
+  const {tasks, onStatusChange} = props;
   return (
       <Grid
         item
@@ -29,6 +29,7 @@ const TaskList:FC<ITaskList> = (props):ReactElement  => {
                                 date={each.date ? new Date(each.date) : new Date()}
                                 priority={each.priority}
                                 status={each.status}
+                                onStatusChange={onStatusChange}
                       />
                 ) : (null)
             })

@@ -8,6 +8,7 @@ import { Status } from '../../createTasks/enums/Status';
 const TaskFooter: FC<ITaskFooter> = (props): ReactElement => {
 
     const {
+        id,
         status,
         onStatusChange = (e) => console.log(e),
         onClick = (e) => console.log(e)
@@ -25,7 +26,7 @@ const TaskFooter: FC<ITaskFooter> = (props): ReactElement => {
                 control={
                     <Switch
                         color="warning"
-                        onChange={onStatusChange}
+                        onChange={(e)=> onStatusChange(e, id)}
                         defaultChecked={status === Status.inProgress}
                     />
                 }
@@ -35,7 +36,7 @@ const TaskFooter: FC<ITaskFooter> = (props): ReactElement => {
                 color="success"
                 size="small"
                 sx={{ color: '#ffffff' }}
-                onClick={onClick}
+                onClick={(e)=>onClick(e, id)}
             >
                 Mark Complete
             </Button>
