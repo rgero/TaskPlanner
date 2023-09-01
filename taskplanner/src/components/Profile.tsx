@@ -7,17 +7,17 @@ import { avatarStyle, profileStyle } from '../styles/Sidebar';
 import IProfile from '../interfaces/IProfile';
 
 const Profile:FC<IProfile> = (props):ReactElement  => {
-    const {name = "Unknown" } = props;
+    const {displayName = "Unknown" } = props;
 
     return (
         <Box sx={profileStyle}>
             <Avatar sx={avatarStyle}>
                 <Typography variant="h4" color="white">
-                    {`${name.substring(0,1)}`}
+                    {`${displayName.substring(0,1)}`}
                 </Typography>
             </Avatar>
             <Typography variant="h4" color="text.primary" sx={{pt:3}}>
-                Welcome, {name}!
+                Welcome, {displayName}!
             </Typography>
             <Typography variant="subtitle1" color="text.primary">
                 This is your personal tasks manager
@@ -27,7 +27,7 @@ const Profile:FC<IProfile> = (props):ReactElement  => {
 };
 
 Profile.propTypes = {
-    name: PropTypes.string
+    displayName: PropTypes.string,
 }
 
 export default Profile;

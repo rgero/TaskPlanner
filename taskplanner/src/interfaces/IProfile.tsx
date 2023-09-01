@@ -1,6 +1,7 @@
 // This defines the structure of the props.
 interface IProfile {
-    name? : string;
+    displayName? : string;
+    token?: string,
 }
 
 export default IProfile
