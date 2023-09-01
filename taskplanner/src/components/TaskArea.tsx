@@ -29,6 +29,14 @@ const TaskArea:FC = ():ReactElement  => {
         }
         updateMutation.mutate(data); 
     }
+
+    const markCompleteHandler = (e: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLAnchorElement>, id: string) => {
+        const data = {
+            id,
+            status: Status.done
+        }
+        updateMutation.mutate(data);
+    }
     
     return (
         <Grid item md={8} px={4}>
@@ -39,7 +47,7 @@ const TaskArea:FC = ():ReactElement  => {
             </Box>
             <Grid container display="flex" justifyContent="center">
                 <TaskStats tasks={taskData} />
-                <TaskList tasks={taskData} onStatusChange={onStatusChangeHandler}/>
+                <TaskList tasks={taskData} onStatusChange={onStatusChangeHandler} onClick={markCompleteHandler}/>
             </Grid>
 
             <Snackbar

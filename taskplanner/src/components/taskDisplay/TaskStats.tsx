@@ -4,31 +4,13 @@ import { Grid } from '@mui/material';
 import TaskCounter from './TaskCounter';
 import { Status } from '../createTasks/enums/Status';
 import { ITaskList } from './interfaces/ITaskList';
+import { ProcessTaskPriorities } from './helpers/CountTasks';
 
 const TaskStats:FC<ITaskList> = (props):ReactElement  => {
 
   const {tasks} = props;
 
-  let todoCount = 0;
-  let inProgressCount = 0;
-  let doneCount = 0;
-
-  if (Array.isArray(tasks) && tasks.length != 0){
-    tasks.map((each)=> {
-      switch(each.status)
-      {
-        case Status.todo:
-          todoCount++;
-          break;
-        case Status.inProgress:
-          inProgressCount++;
-          break;
-        case Status.done:
-          doneCount++;
-          break;
-      }
-    })
-  }
+  const processedValues = ProcessTaskPriorities(tasks);
 
   return (
       <Grid
@@ -41,9 +23,9 @@ const TaskStats:FC<ITaskList> = (props):ReactElement  => {
         xs={12}
         mb={8}
       >
-        <TaskCounter status={Status.todo} count={todoCount}/>
-        <TaskCounter status={Status.inProgress} count={inProgressCount}/>
-        <TaskCounter status={Status.done} count={doneCount}/>
+        <TaskCounter status={Status.todo} count={processedValues.todo}/>
+        <TaskCounter status={Status.inProgress} count={processedValues.inProgress}/>
+        <TaskCounter status={Status.done} count={processedValues.done}/>
       </Grid>
   )
 }
