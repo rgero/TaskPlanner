@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, useContext, useEffect} from 'react';
 import { format } from 'date-fns';
 import { useMutation, useQuery } from 'react-query';
 import { Alert, Box, Grid, Snackbar } from '@mui/material';
@@ -8,17 +8,35 @@ import TaskStats from './taskDisplay/TaskStats';
 import TaskList from './taskDisplay/TaskList';
 import { Status } from './createTasks/enums/Status';
 import { IUpdateTask } from './createTasks/intefaces/IUpdateTask';
+import { TaskStatusChangedContext } from '../context';
 
 
 const TaskArea:FC = ():ReactElement  => {
 
+    const tasksUpdatedContext = useContext(TaskStatusChangedContext);
     const {error, isLoading, data, refetch} = useQuery("tasks", async () => { return await taskplannerAPI.get('/tasks');});
     const taskData = data?.data;
 
     const updateMutation = useMutation(
         (data:IUpdateTask) => {
             return taskplannerAPI.put('/tasks', data)
-    })
+        }
+    )
+
+    useEffect(
+        ()=> {
+            refetch();
+        }, [tasksUpdatedContext.updated]
+    )
+
+    useEffect(
+        ()=> {
+            if(updateMutation.isSuccess)
+            {
+                tasksUpdatedContext.toggle();
+            }
+        }, [updateMutation.isSuccess]
+    )
 
     const onStatusChangeHandler = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
         const data = {

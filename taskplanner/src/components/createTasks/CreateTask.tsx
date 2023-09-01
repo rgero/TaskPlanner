@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useEffect} from 'react';
+import React, {FC, ReactElement, useEffect, useContext} from 'react';
 import { Alert, AlertTitle, Box, Button, LinearProgress, Stack, Typography } from '@mui/material';
 import { useMutation } from 'react-query';
 import { format } from 'date-fns';
@@ -12,6 +12,7 @@ import TaskSelectField from './components/taskSelectField';
 
 import taskplannerAPI from '../../api/taskplanner.api';
 import { ICreateTask } from './intefaces/ICreateTask';
+import { TaskStatusChangedContext } from '../../context';
 
 const statusOptions = [
     {
@@ -52,6 +53,8 @@ const CreateTask:FC = ():ReactElement  => {
     const [priority, setPriority] = React.useState<string>(priorities[0].value)
     const [showSuccess, setSuccess] = React.useState<boolean>(false);
 
+    const tasksUpdatedContext = useContext(TaskStatusChangedContext);
+
     const createTaskMutation = useMutation((data:ICreateTask) => {
             return taskplannerAPI.post('/tasks', data);
         }
@@ -79,6 +82,7 @@ const CreateTask:FC = ():ReactElement  => {
         if (createTaskMutation.isSuccess)
         {
             setSuccess(true);
+            tasksUpdatedContext.toggle();
         }
         const successTimeout = setTimeout( ()=>{setSuccess(false)}, 7000);
 
